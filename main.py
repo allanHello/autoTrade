@@ -14,7 +14,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 import win32api
 import ConfigParser
 
-BASE_DIR = os.path.dirname(__file__)
+BASE_DIR = os.path.dirname(__file__)  # 运行目录
 logging.config.fileConfig("logging.ini")
 logger = logging.getLogger("xzs")
 VK_CODE = {
@@ -185,6 +185,9 @@ def delete_file(filename):
 
 
 def try_more(web_driver, try_times, f):
+    """if failure try more
+       f: 高阶函数
+    """
     ini_times = try_times
     while try_times > 0:
         logger.debug("try %d", ini_times - try_times + 1)
@@ -211,6 +214,7 @@ def get_driver():
 
 
 def entry_home_try(web_driver):
+    """entry home and find login link"""
     try:
         entry_link = web_driver.find_element(By.LINK_TEXT, u"联通入口")
         entry_link.click()
@@ -324,6 +328,6 @@ def workflow():
 
 try:
     workflow()
-    raw_input()
+    raw_input()  # wait until enter
 except:
     logger.exception('Got exception on main handler')
